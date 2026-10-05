@@ -90,8 +90,8 @@ h6 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 600px;
-  height: 600px;
+  width: 480px;
+  height: 480px;
   border-radius: 50%;
   background: rgba(20, 30, 50, 0.4);
   border: 2px solid rgba(255, 255, 255, 0.05);
@@ -261,22 +261,22 @@ h6 {
 
 .table-card-top {
   position: absolute;
-  transform: translate(-50%, -50%) translateY(-80px);
+  transform: translate(-50%, -50%) translateY(-65px) scale(0.7);
 }
 
 .table-card-bottom {
   position: absolute;
-  transform: translate(-50%, -50%) translateY(80px);
+  transform: translate(-50%, -50%) translateY(65px) scale(0.7);
 }
 
 .table-card-left {
   position: absolute;
-  transform: translate(-50%, -50%) translateX(-80px);
+  transform: translate(-50%, -50%) translateX(-65px) scale(0.7);
 }
 
 .table-card-right {
   position: absolute;
-  transform: translate(-50%, -50%) translateX(80px);
+  transform: translate(-50%, -50%) translateX(65px) scale(0.7);
 }
 
 /* Badges for top bar points */
@@ -329,11 +329,11 @@ h6 {
   transform: scale(1.05) !important;
 }
 .player-top .is-turn-hand.hand-horizontal {
-  transform: scale(0.85) !important;
+  transform: scale(0.75) !important;
 }
 .player-left .is-turn-hand.hand-vertical,
 .player-right .is-turn-hand.hand-vertical {
-  transform: scale(0.85) !important;
+  transform: scale(0.75) !important;
 }
 
 .desktop-only {
@@ -424,10 +424,10 @@ h6 {
   }
 
   /* Center Table Cards */
-  .table-card-top { transform: translate(-50%, -50%) translateY(-45px); }
-  .table-card-bottom { transform: translate(-50%, -50%) translateY(45px); }
-  .table-card-left { transform: translate(-50%, -50%) translateX(-45px); }
-  .table-card-right { transform: translate(-50%, -50%) translateX(45px); }
+  .table-card-top { transform: translate(-50%, -50%) translateY(-35px) scale(0.65); }
+  .table-card-bottom { transform: translate(-50%, -50%) translateY(35px) scale(0.65); }
+  .table-card-left { transform: translate(-50%, -50%) translateX(-35px) scale(0.65); }
+  .table-card-right { transform: translate(-50%, -50%) translateX(35px) scale(0.65); }
 
   /* Position players exactly on the rim of the table */
   /* Using max to prevent it stretching too far on tablets */

@@ -144,11 +144,11 @@ const PlayerArea = ({ position, name, cards, isTurn, points, rounds, team, voice
 
   const handEl = (
     isBottom || isTop ? (
-      <div className={`hand hand-horizontal ${isTurn ? 'is-turn-hand' : ''}`} style={{ transform: isTop ? 'scale(0.8)' : 'scale(0.95)', transformOrigin: isTop ? 'top center' : 'bottom center' }}>
+      <div className={`hand hand-horizontal ${isTurn ? 'is-turn-hand' : ''}`} style={{ transform: isTop ? 'scale(0.6)' : 'scale(0.95)', transformOrigin: isTop ? 'top center' : 'bottom center' }}>
         {cards}
       </div>
     ) : (
-      <div className={`hand hand-vertical ${isTurn ? 'is-turn-hand' : ''}`} style={{ transform: 'scale(0.8)', transformOrigin: isLeft ? 'left center' : 'right center' }}>
+      <div className={`hand hand-vertical ${isTurn ? 'is-turn-hand' : ''}`} style={{ transform: 'scale(0.6)', transformOrigin: isLeft ? 'left center' : 'right center' }}>
         {cards.map((c, i) => (
            <div className={`card-vertical-wrapper ${isTurn ? 'is-turn-hand' : ''}`} key={i} style={{ zIndex: i }}>
               {c}
