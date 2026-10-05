@@ -132,6 +132,38 @@ h6 {
   z-index: 1;
 }
 
+.card-back-pattern {
+  background: #b22222;
+  background-image: 
+    linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.2) 25%, rgba(255,255,255,0.2) 50%, transparent 50%, transparent 75%, rgba(255,255,255,0.2) 75%, rgba(255,255,255,0.2) 100%),
+    linear-gradient(-45deg, transparent 25%, rgba(255,255,255,0.2) 25%, rgba(255,255,255,0.2) 50%, transparent 50%, transparent 75%, rgba(255,255,255,0.2) 75%, rgba(255,255,255,0.2) 100%);
+  background-size: 12px 12px;
+  border: 5px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0;
+}
+.card-back-pattern::after {
+  display: none;
+}
+.card-back-inner {
+  width: 75%;
+  height: 75%;
+  border: 2px solid rgba(255,255,255,0.6);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.15);
+  color: rgba(255,255,255,0.9);
+  font-size: 2rem;
+  font-weight: 900;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  font-family: 'Outfit', sans-serif;
+}
+
 .playing-card.red {
   color: #ef4444;
 }
@@ -567,5 +599,14 @@ h6 {
 
   .card-center {
     font-size: 2rem !important;
+  }
+
+  .card-back-pattern {
+    border-width: 3px;
+    background-size: 8px 8px;
+  }
+  
+  .card-back-inner {
+    font-size: 1.2rem;
   }
 }

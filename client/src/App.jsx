@@ -15,26 +15,12 @@ const PlayingCard = ({ rank, suit, isHidden, onClick, style, isPlayable }) => {
   if (isHidden) {
     return (
       <motion.div 
-        className="playing-card"
-        style={{ 
-          background: 'radial-gradient(circle at 30% 30%, #3a3a5a, #111122)',
-          border: '1px solid rgba(255,255,255,0.2)',
-          boxShadow: 'inset 0 0 20px rgba(0,0,0,0.8), 2px 4px 8px rgba(0,0,0,0.5)',
-          ...style 
-        }}
+        className="playing-card card-back-pattern"
+        style={style}
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
       >
-        <div style={{
-          position: 'absolute', top: '10px', left: '10px', right: '10px', bottom: '10px',
-          border: '1px dashed rgba(255,255,255,0.3)', borderRadius: '6px',
-          display: 'flex', alignItems: 'center', justifyContent: 'center'
-        }}>
-          <div style={{ 
-            color: 'rgba(255,255,255,0.8)', fontSize: '2.5rem', fontWeight: '900', 
-            textShadow: '0 2px 10px rgba(0,0,0,0.8)', fontFamily: 'Outfit'
-          }}>29</div>
-        </div>
+        <div className="card-back-inner">29</div>
       </motion.div>
     );
   }
@@ -550,6 +536,33 @@ export default function App() {
           <div className="table-card-left">{renderTableCard('left')}</div>
           <div className="table-card-right">{renderTableCard('right')}</div>
           <div className="table-card-bottom">{renderTableCard('bottom')}</div>
+
+          {/* Your Turn Indicator */}
+          {state.turn?.player === client.meId && !state.bid.open && !state.gameOver && (
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                color: '#ef4444',
+                fontSize: '2.5rem',
+                fontWeight: '900',
+                textShadow: '0 0 15px rgba(239,68,68,0.8), 0 0 5px black, 0 4px 4px rgba(0,0,0,0.5)',
+                zIndex: 100,
+                pointerEvents: 'none',
+                fontFamily: 'Outfit',
+                textTransform: 'uppercase',
+                letterSpacing: '2px',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              Your Turn
+            </motion.div>
+          )}
 
           {state.bid.open && (
             <motion.div className="glass-panel" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '15px', zIndex: 100, width: '90vw', maxWidth: '350px' }}>
