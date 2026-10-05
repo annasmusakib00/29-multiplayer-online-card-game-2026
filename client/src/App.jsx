@@ -214,7 +214,7 @@ export default function App() {
       <div className="app-container" style={{ alignItems: 'center', justifyContent: 'center' }}>
         <motion.div 
           className="glass-panel" 
-          style={{ width: '400px', padding: '40px', display: 'flex', flexDirection: 'column', gap: '20px' }}
+          style={{ width: '90%', maxWidth: '400px', padding: '30px', display: 'flex', flexDirection: 'column', gap: '20px' }}
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
         >
@@ -387,8 +387,8 @@ export default function App() {
       </div>
 
       {/* Top Bar */}
-      <div style={{ padding: '20px', display: 'flex', justifyContent: 'space-between', zIndex: 100 }}>
-        <div className="glass-panel" style={{ padding: '10px 20px', display: 'flex', alignItems: 'center', gap: '20px' }}>
+      <div className="top-bar-container">
+        <div className="glass-panel top-bar-info">
           <span style={{ fontWeight: 'bold' }}>Room: {state.room?.name || 'Classic'}</span>
           <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>Purple: {state.rounds[1]} R / {state.points[1]} Pts</span>
           <span style={{ color: 'var(--accent)', fontWeight: 'bold' }}>Green: {state.rounds[0]} R / {state.points[0]} Pts</span>
@@ -399,7 +399,7 @@ export default function App() {
              </span>
           )}
         </div>
-        <div style={{ display: 'flex', gap: '10px' }}>
+        <div className="top-bar-actions">
           <button 
             className="glass-panel" 
             onClick={() => client.toggleSound()}
@@ -494,23 +494,23 @@ export default function App() {
       />
       
       {/* Score Cards (Bottom Left & Right) */}
-      <div style={{ position: 'absolute', bottom: '20px', left: '20px', zIndex: 20 }}>
+      <div className="score-card desktop-only" style={{ position: 'absolute', bottom: '20px', left: '20px', zIndex: 20 }}>
         <ScoreCard team="green" points={state.rounds[0]} />
       </div>
-      <div style={{ position: 'absolute', bottom: '20px', right: '20px', zIndex: 20 }}>
+      <div className="score-card desktop-only" style={{ position: 'absolute', bottom: '20px', right: '20px', zIndex: 20 }}>
         <ScoreCard team="purple" points={state.rounds[1]} />
       </div>
 
       {/* Center Played Cards & Modals */}
       <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 50, display: 'flex', gap: '20px' }}>
           {/* Table Cards */}
-          <div style={{ position: 'absolute', transform: 'translate(-50%, -50%) translateY(-80px)' }}>{renderTableCard('top')}</div>
-          <div style={{ position: 'absolute', transform: 'translate(-50%, -50%) translateX(-80px)' }}>{renderTableCard('left')}</div>
-          <div style={{ position: 'absolute', transform: 'translate(-50%, -50%) translateX(80px)' }}>{renderTableCard('right')}</div>
-          <div style={{ position: 'absolute', transform: 'translate(-50%, -50%) translateY(80px)' }}>{renderTableCard('bottom')}</div>
+          <div className="table-card-top">{renderTableCard('top')}</div>
+          <div className="table-card-left">{renderTableCard('left')}</div>
+          <div className="table-card-right">{renderTableCard('right')}</div>
+          <div className="table-card-bottom">{renderTableCard('bottom')}</div>
 
           {state.bid.open && (
-            <motion.div className="glass-panel" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '15px', zIndex: 100 }}>
+            <motion.div className="glass-panel" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '15px', zIndex: 100, width: '90vw', maxWidth: '350px' }}>
               <h3 style={{ textAlign: 'center' }}>Bidding Phase</h3>
               
               {state.bid.mode === 'raise' && (
@@ -527,7 +527,7 @@ export default function App() {
               {state.bid.mode === 'trump' && (
                 <>
                   <p style={{ textAlign: 'center' }}>You won the bid! Select Trump:</p>
-                  <div style={{ display: 'flex', gap: '10px' }}>
+                  <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
                     <button className="btn-primary" style={{ background: 'black', color: 'white' }} onClick={() => client.chooseTrump('S')}>♠</button>
                     <button className="btn-primary" style={{ background: 'red', color: 'white' }} onClick={() => client.chooseTrump('H')}>♥</button>
                     <button className="btn-primary" style={{ background: 'red', color: 'white' }} onClick={() => client.chooseTrump('D')}>♦</button>
@@ -569,7 +569,7 @@ export default function App() {
           {state.gameOver && (
             <motion.div 
               className="glass-panel" 
-              style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '15px', zIndex: 200, background: 'rgba(0,0,0,0.8)' }}
+              style={{ padding: '30px', display: 'flex', flexDirection: 'column', gap: '15px', zIndex: 200, background: 'rgba(0,0,0,0.8)', width: '90vw', maxWidth: '400px' }}
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
             >
@@ -588,7 +588,7 @@ export default function App() {
       {state.chatOpen && (
         <motion.div 
           className="glass-panel"
-          style={{ position: 'absolute', right: '20px', bottom: '20px', width: '300px', height: '400px', display: 'flex', flexDirection: 'column', zIndex: 200, padding: '15px' }}
+          style={{ position: 'absolute', right: '20px', bottom: '20px', width: '90%', maxWidth: '300px', height: '400px', maxHeight: '60vh', display: 'flex', flexDirection: 'column', zIndex: 200, padding: '15px' }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
