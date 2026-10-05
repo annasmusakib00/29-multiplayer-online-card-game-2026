@@ -4,7 +4,8 @@
   "description": "29 - The Card Game",
   "main": "server.js",
   "scripts": {
-    "start": "npm run build && node server.js",
+    "start": "node server.js",
+    "postinstall": "npm run build",
     "build": "cd client && npm install && npm run build"
   },
   "dependencies": {
