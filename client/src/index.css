@@ -160,10 +160,10 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 10;
 }
 
-.player-bottom { bottom: 40px; left: 50%; transform: translateX(-50%); }
-.player-top { top: 40px; left: 50%; transform: translateX(-50%); }
-.player-left { left: 40px; top: 50%; transform: translateY(-50%); }
-.player-right { right: 40px; top: 50%; transform: translateY(-50%); }
+.player-bottom { bottom: 70px; left: 50%; transform: translateX(-50%); }
+.player-top { top: 70px; left: 50%; transform: translateX(-50%); }
+.player-left { left: 20px; top: 50%; transform: translateY(-50%); }
+.player-right { right: 20px; top: 50%; transform: translateY(-50%); }
 
 .hand {
   display: flex;
