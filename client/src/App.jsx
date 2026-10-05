@@ -356,7 +356,9 @@ export default function App() {
           <span style={{ color: 'var(--accent)', fontWeight: 'bold' }}>Green: {state.rounds[0]} R / {state.points[0]} Pts</span>
           <span style={{ color: 'var(--text-muted)' }}>| Bid: {state.bidWinner ? `${state.bids[0] || state.bids[1] || ''}` : 'In Progress'}</span>
           {state.trump.open && (
-             <span style={{ color: 'gold', fontWeight: 'bold' }}>Trump: {state.trump.card ? state.trump.card.slice(-1) : 'Opened'}</span>
+             <span style={{ color: state.trump.card && SUITS[state.trump.card.slice(-1)]?.color === 'red' ? '#ef4444' : 'var(--text-main)', fontWeight: 'bold' }}>
+               Trump: {state.trump.card ? SUITS[state.trump.card.slice(-1)]?.icon : 'Opened'}
+             </span>
           )}
         </div>
         <div style={{ display: 'flex', gap: '10px' }}>
