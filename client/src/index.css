@@ -539,12 +539,13 @@ h6 {
 
   /* Score Cards Mobile */
   .score-card-container {
-    top: 80px;
-    bottom: auto;
-    transform: scale(0.6);
+    top: auto;
+    bottom: 5px;
+    transform: scale(0.55);
+    z-index: 250;
   }
-  .score-green { left: -10px; }
-  .score-purple { right: -10px; }
+  .score-green { left: 0px; transform-origin: bottom left; }
+  .score-purple { right: 0px; transform-origin: bottom right; }
 
   /* Horizontal hand spacing for bottom player */
   .hand-horizontal > * {
