@@ -143,13 +143,13 @@ const PlayerArea = ({ position, name, cards, isTurn, points, rounds, team, voice
 
   const handEl = (
     isBottom || isTop ? (
-      <div className="hand hand-horizontal" style={{ transform: isTop ? 'scale(0.8)' : 'scale(0.95)', transformOrigin: isTop ? 'top center' : 'bottom center' }}>
+      <div className={`hand hand-horizontal ${isTurn ? 'is-turn-hand' : ''}`} style={{ transform: isTop ? 'scale(0.8)' : 'scale(0.95)', transformOrigin: isTop ? 'top center' : 'bottom center' }}>
         {cards}
       </div>
     ) : (
-      <div className="hand hand-vertical" style={{ transform: 'scale(0.8)', transformOrigin: isLeft ? 'left center' : 'right center' }}>
+      <div className={`hand hand-vertical ${isTurn ? 'is-turn-hand' : ''}`} style={{ transform: 'scale(0.8)', transformOrigin: isLeft ? 'left center' : 'right center' }}>
         {cards.map((c, i) => (
-           <div className="card-vertical-wrapper" key={i} style={{ zIndex: i }}>
+           <div className={`card-vertical-wrapper ${isTurn ? 'is-turn-hand' : ''}`} key={i} style={{ zIndex: i }}>
               {c}
            </div>
         ))}
@@ -353,7 +353,7 @@ export default function App() {
             suit={suit} 
             isHidden={false} 
             isPlayable={state.my.active && isAllowed}
-            onClick={() => client.selectCard(c)}
+            onClick={() => client.playCard(c)}
             style={{ zIndex: i, transform: state.selected === c ? 'translateY(-20px)' : 'none' }}
           />
         );
@@ -393,11 +393,6 @@ export default function App() {
           <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>Purple: {state.rounds[1]} R / {state.points[1]} Pts</span>
           <span style={{ color: 'var(--accent)', fontWeight: 'bold' }}>Green: {state.rounds[0]} R / {state.points[0]} Pts</span>
           <span style={{ color: 'var(--text-muted)' }}>| Bid: {state.bidWinner ? `${state.bids[0] || state.bids[1] || ''}` : 'In Progress'}</span>
-          {state.trump.open && (
-             <span style={{ color: state.trump.card && SUITS[state.trump.card.slice(-1)]?.color === 'red' ? '#ef4444' : 'var(--text-main)', fontWeight: 'bold' }}>
-               Trump: {state.trump.card ? SUITS[state.trump.card.slice(-1)]?.icon : 'Opened'}
-             </span>
-          )}
         </div>
         <div className="top-bar-actions">
           <button 
@@ -508,6 +503,25 @@ export default function App() {
           <div className="table-card-left">{renderTableCard('left')}</div>
           <div className="table-card-right">{renderTableCard('right')}</div>
           <div className="table-card-bottom">{renderTableCard('bottom')}</div>
+
+          {/* Visual Trump Card Display on Table */}
+          {state.trump.setter && (
+            <motion.div 
+              initial={{ scale: 0 }}
+              animate={{ scale: 1, rotateY: state.trump.open ? 180 : 0 }}
+              transition={{ duration: 0.6, type: 'spring' }}
+              style={{ position: 'absolute', top: '-110px', left: '-110px', zIndex: 10, transformStyle: 'preserve-3d' }}
+              className="trump-card-display"
+            >
+              {state.trump.open ? (
+                <div style={{ transform: 'rotateY(180deg)' }}>
+                  <PlayingCard rank={state.trump.card?.slice(0, -1)} suit={state.trump.card?.slice(-1)} />
+                </div>
+              ) : (
+                <PlayingCard isHidden={true} />
+              )}
+            </motion.div>
+          )}
 
           {state.bid.open && (
             <motion.div className="glass-panel" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '15px', zIndex: 100, width: '90vw', maxWidth: '350px' }}>
