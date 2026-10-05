@@ -377,9 +377,11 @@ export default function App() {
       {/* Top Bar */}
       <div className="top-bar-container">
         <div className="top-bar-info">
-          <span className="badge" style={{ background: 'rgba(255,255,255,0.1)' }}>Room: {state.room?.name || 'Classic'}</span>
-          <span className="badge badge-purple">Purple: {state.rounds[1]} R / {state.points[1]} Pts</span>
-          <span className="badge badge-green">Green: {state.rounds[0]} R / {state.points[0]} Pts</span>
+          <div className="top-bar-scores">
+            <span className="badge desktop-only" style={{ background: 'rgba(255,255,255,0.1)' }}>Room: {state.room?.name || 'Classic'}</span>
+            <span className="badge badge-purple">Purple: {state.rounds[1]} R / {state.points[1]} Pts</span>
+            <span className="badge badge-green">Green: {state.rounds[0]} R / {state.points[0]} Pts</span>
+          </div>
           <span className="badge badge-blue">Bid: {state.bidWinner ? `${state.bids[0] || state.bids[1] || ''}` : 'In Progress'}</span>
         </div>
         <div className="top-bar-actions">

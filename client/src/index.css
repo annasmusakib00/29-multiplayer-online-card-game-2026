@@ -397,6 +397,12 @@ h6 {
   flex-wrap: wrap;
 }
 
+.top-bar-scores {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .top-bar-actions {
   display: flex;
   gap: 10px;
@@ -423,11 +429,25 @@ h6 {
   }
 
   .top-bar-info {
-    gap: 8px;
+    gap: 4px;
     padding: 6px 10px;
     font-size: 0.75rem;
+    flex-direction: column;
     justify-content: center;
-    text-align: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .top-bar-scores {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .badge {
+    padding: 4px 8px;
+    font-size: 0.7rem;
   }
 
   .top-bar-actions {
