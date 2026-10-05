@@ -496,6 +496,28 @@ export default function App() {
         <ScoreCard team="purple" points={state.rounds[1]} />
       </div>
 
+      {/* Visual Trump Card Display (Outside Board) */}
+      {state.trump.setter && (
+        <div className="trump-card-container">
+          <span style={{ color: 'var(--text-main)', fontWeight: 'bold', marginBottom: '5px', textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>Trump</span>
+          <motion.div 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1, rotateY: state.trump.open ? 180 : 0 }}
+            transition={{ duration: 0.6, type: 'spring' }}
+            style={{ transformStyle: 'preserve-3d' }}
+            className="trump-card-display"
+          >
+            {state.trump.open ? (
+              <div style={{ transform: 'rotateY(180deg)' }}>
+                <PlayingCard rank={state.trump.card?.slice(0, -1)} suit={state.trump.card?.slice(-1)} />
+              </div>
+            ) : (
+              <PlayingCard isHidden={true} />
+            )}
+          </motion.div>
+        </div>
+      )}
+
       {/* Center Played Cards & Modals */}
       <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 50, display: 'flex', gap: '20px' }}>
           {/* Table Cards */}
@@ -503,25 +525,6 @@ export default function App() {
           <div className="table-card-left">{renderTableCard('left')}</div>
           <div className="table-card-right">{renderTableCard('right')}</div>
           <div className="table-card-bottom">{renderTableCard('bottom')}</div>
-
-          {/* Visual Trump Card Display on Table */}
-          {state.trump.setter && (
-            <motion.div 
-              initial={{ scale: 0 }}
-              animate={{ scale: 1, rotateY: state.trump.open ? 180 : 0 }}
-              transition={{ duration: 0.6, type: 'spring' }}
-              style={{ position: 'absolute', top: '-110px', left: '-110px', zIndex: 10, transformStyle: 'preserve-3d' }}
-              className="trump-card-display"
-            >
-              {state.trump.open ? (
-                <div style={{ transform: 'rotateY(180deg)' }}>
-                  <PlayingCard rank={state.trump.card?.slice(0, -1)} suit={state.trump.card?.slice(-1)} />
-                </div>
-              ) : (
-                <PlayingCard isHidden={true} />
-              )}
-            </motion.div>
-          )}
 
           {state.bid.open && (
             <motion.div className="glass-panel" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '15px', zIndex: 100, width: '90vw', maxWidth: '350px' }}>

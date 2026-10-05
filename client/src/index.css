@@ -279,6 +279,19 @@ h6 {
   transform: translate(-50%, -50%) translateX(80px);
 }
 
+/* Trump Card Outside Board */
+.trump-card-container {
+  position: absolute;
+  top: 120px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(0.6);
+  transform-origin: top right;
+  z-index: 40;
+}
+
 /* Active Turn Zoom & Spread Animations */
 .is-turn-hand {
   z-index: 1000 !important;
@@ -493,6 +506,13 @@ h6 {
   .player-left .is-turn-hand.hand-vertical,
   .player-right .is-turn-hand.hand-vertical {
     transform: translateY(-50%) scale(0.6) !important;
+  }
+
+  /* Trump Card Mobile */
+  .trump-card-container {
+    top: 130px;
+    right: 10px;
+    transform: scale(0.45);
   }
 
   /* Score Cards Mobile */
