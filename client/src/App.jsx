@@ -20,7 +20,6 @@ const PlayingCard = ({ rank, suit, isHidden, onClick, style, isPlayable }) => {
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
       >
-        <div className="card-back-inner">29</div>
       </motion.div>
     );
   }
@@ -567,8 +566,8 @@ export default function App() {
           )}
 
           {state.bid.open && (
-            <motion.div className="glass-panel" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '15px', zIndex: 100, width: '90vw', maxWidth: '350px' }}>
-              <h3 style={{ textAlign: 'center' }}>Bidding Phase</h3>
+            <motion.div className="glass-panel bid-panel">
+              <h3 style={{ textAlign: 'center', marginTop: 0 }}>Bidding Phase</h3>
               
               {state.bid.mode === 'raise' && (
                 <>
