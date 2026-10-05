@@ -28,7 +28,15 @@ export class VoiceMesh {
 
   async startCamera() {
     this.stream = await navigator.mediaDevices.getUserMedia({ 
-      audio: { echoCancellation: true, noiseSuppression: true }, 
+      audio: { 
+        echoCancellation: true, 
+        noiseSuppression: true,
+        autoGainControl: true,
+        googEchoCancellation: true,
+        googAutoGainControl: true,
+        googNoiseSuppression: true,
+        googHighpassFilter: true
+      }, 
       video: { width: 320, height: 240, frameRate: 15 } 
     });
     // Reconnect to all peers to send the new stream
