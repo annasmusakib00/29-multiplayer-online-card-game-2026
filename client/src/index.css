@@ -98,10 +98,10 @@ h1, h2, h3, h4, h5, h6 {
   width: var(--card-width);
   height: var(--card-height);
   border-radius: 12px;
-  background: linear-gradient(135deg, #ffffff 0%, #e6e6e6 100%);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
   box-shadow: 
-    -2px -2px 5px rgba(255,255,255,0.5),
+    -2px -2px 5px rgba(255,255,255,1),
     4px 6px 12px rgba(0,0,0,0.4),
     inset 0 0 8px rgba(0,0,0,0.05);
   display: flex;
@@ -115,6 +115,16 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
   transform-style: preserve-3d;
+}
+
+.playing-card::after {
+  content: '';
+  position: absolute;
+  top: 6px; left: 6px; right: 6px; bottom: 6px;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 6px;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .playing-card::before {

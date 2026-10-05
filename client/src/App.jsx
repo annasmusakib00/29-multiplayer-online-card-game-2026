@@ -53,7 +53,12 @@ const PlayingCard = ({ rank, suit, isHidden, onClick, style, isPlayable }) => {
         <span>{rank}</span>
         <span>{s.icon}</span>
       </div>
-      <div className="card-center" style={{ color: s.color === 'red' ? '#ef4444' : '#1c1c1e' }}>
+      <div className="card-center" style={{ 
+        color: s.color === 'red' ? '#ff1010' : '#0a0a0a',
+        fontSize: '5rem',
+        textShadow: '0 2px 8px rgba(0,0,0,0.15)',
+        opacity: 1
+      }}>
         {s.icon}
       </div>
       <div className="card-bottom-right">
