@@ -1011,7 +1011,6 @@ app.get('/serverPingCheck', function (req, res) {
 });
 
 app.use(express.static(__dirname + '/client/dist', { maxAge: 3600000 }));
-app.use(express.static(__dirname + '/public', { maxAge: 3600000 })); // legacy fallback for audio files or static assets
 
 http.listen(port, function () {
 	console.log(colors.bgBlue.green('Listening on port ' + port));
