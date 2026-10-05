@@ -127,13 +127,13 @@ const PlayerArea = ({ position, name, cards, isTurn, points, rounds, team, voice
 
   const handEl = (
     isBottom || isTop ? (
-      <div className="hand" style={{ transform: isTop ? 'scale(0.8)' : 'scale(0.95)', transformOrigin: isTop ? 'top center' : 'bottom center' }}>
+      <div className="hand hand-horizontal" style={{ transform: isTop ? 'scale(0.8)' : 'scale(0.95)', transformOrigin: isTop ? 'top center' : 'bottom center' }}>
         {cards}
       </div>
     ) : (
-      <div className="hand" style={{ flexDirection: 'column', gap: '-90px', transform: 'scale(0.8)', transformOrigin: isLeft ? 'left center' : 'right center' }}>
+      <div className="hand hand-vertical" style={{ transform: 'scale(0.8)', transformOrigin: isLeft ? 'left center' : 'right center' }}>
         {cards.map((c, i) => (
-           <div key={i} style={{ transform: 'rotate(90deg)', marginBottom: '-60px', zIndex: i }}>
+           <div className="card-vertical-wrapper" key={i} style={{ zIndex: i }}>
               {c}
            </div>
         ))}
@@ -142,7 +142,7 @@ const PlayerArea = ({ position, name, cards, isTurn, points, rounds, team, voice
   );
 
   return (
-    <div className={`player-area player-${position}`} style={{ flexDirection, gap: '20px' }}>
+    <div className={`player-area player-${position}`} style={{ flexDirection }}>
       {isBottom ? handEl : infoEl}
       {isBottom ? infoEl : handEl}
     </div>
