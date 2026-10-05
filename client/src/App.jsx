@@ -214,6 +214,29 @@ export default function App() {
           {state.ui.joinError && <p style={{ color: 'red', textAlign: 'center' }}>{state.ui.joinError}</p>}
           {state.ui.loginError && <p style={{ color: 'red', textAlign: 'center' }}>{state.ui.loginError.msg}</p>}
 
+          {state.roomsLoaded && state.rooms.length > 0 && lobbyTab === 'join' && (
+            <div style={{ marginBottom: '15px', background: 'rgba(0,0,0,0.4)', padding: '15px', borderRadius: '12px' }}>
+              <h3 style={{ marginTop: 0, marginBottom: '10px', fontSize: '1rem', color: 'var(--primary)' }}>Available Rooms</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '150px', overflowY: 'auto' }}>
+                {state.rooms.map((r, i) => (
+                  <div 
+                    key={i} 
+                    onClick={() => setRoom(r.name)}
+                    style={{ 
+                      padding: '8px 12px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px',
+                      cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                  >
+                    <span style={{ fontWeight: 'bold' }}>{r.name}</span>
+                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{r.users}/4 Players</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div style={{ display: 'flex', gap: '10px', marginBottom: '10px', width: '100%' }}>
             <button 
               className="btn-primary" 
