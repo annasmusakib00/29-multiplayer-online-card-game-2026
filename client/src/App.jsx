@@ -83,13 +83,14 @@ const VideoPlayer = ({ stream, muted }) => {
     if (videoRef.current && stream) videoRef.current.srcObject = stream;
   }, [stream]);
   return (
-    <video 
-      ref={videoRef}
-      autoPlay 
-      playsInline
-      muted={muted}
-      style={{ width: '64px', height: '64px', borderRadius: '50%', objectFit: 'cover', background: 'black', border: '2px solid var(--primary)' }} 
-    />
+      <video 
+        ref={videoRef}
+        autoPlay 
+        playsInline
+        muted={muted}
+        className="avatar-size"
+        style={{ borderRadius: '50%', objectFit: 'cover', background: 'black', border: '2px solid var(--primary)' }} 
+      />
   );
 };
 
@@ -109,7 +110,7 @@ const PlayerArea = ({ position, name, cards, isTurn, points, rounds, team, voice
       {videoStream ? (
         <VideoPlayer stream={videoStream} muted={isLocal} />
       ) : (
-        <div className="player-avatar" style={{ background: team === 'purple' ? 'var(--primary)' : 'var(--accent)', width: '64px', height: '64px', fontSize: '1.5rem' }}>
+        <div className="player-avatar avatar-size" style={{ background: team === 'purple' ? 'var(--primary)' : 'var(--accent)' }}>
           {name ? name.charAt(0).toUpperCase() : 'P'}
         </div>
       )}

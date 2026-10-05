@@ -203,14 +203,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .player-avatar {
-  width: 40px;
-  height: 40px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
+}
+
+.avatar-size {
+  width: 64px;
+  height: 64px;
+  font-size: 1.5rem;
 }
 
 /* Mobile Responsiveness */
@@ -244,32 +248,39 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 480px) {
   :root {
-    --card-width: 60px;
-    --card-height: 87px;
+    --card-width: 45px;
+    --card-height: 65px;
   }
   .table-surface {
-    width: 95vw;
-    height: 95vw;
-    border-radius: 30px;
+    width: 90vw;
+    height: 90vw;
+    border-radius: 20px;
   }
   .hand-horizontal > * {
-    margin-right: -30px;
+    margin-right: -20px;
   }
   .hand-vertical {
-    gap: -45px;
+    gap: -35px;
   }
   .card-vertical-wrapper {
-    margin-bottom: -30px;
+    margin-bottom: -25px;
   }
   .player-info {
-    transform: scale(0.7);
-    padding: 6px 12px;
+    transform: none; /* Do not scale, actually shrink to fix bounding box */
+    padding: 4px 6px;
+    gap: 4px;
+    font-size: 0.75rem;
+  }
+  .avatar-size {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
   }
   .player-area {
     gap: 5px !important;
   }
-  .player-bottom { bottom: 5px; }
-  .player-top { top: 5px; }
-  .player-left { left: 5px; }
-  .player-right { right: 5px; }
+  .player-bottom { bottom: 2px; }
+  .player-top { top: 2px; }
+  .player-left { left: 0px; }
+  .player-right { right: 0px; }
 }
