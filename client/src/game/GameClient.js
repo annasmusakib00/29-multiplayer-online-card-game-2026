@@ -124,15 +124,15 @@ class GameClient {
     const s = this.state;
     if (!s.room || !s.me) return;
     try {
-      sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+      localStorage.setItem(SESSION_KEY, JSON.stringify({
         room: s.room, me: s.me, isHost: s.isHost, adminPass: s.adminPass, startTime: s.startTime,
       }));
     } catch { /* ignore */ }
   }
-  clearSession() { try { sessionStorage.removeItem(SESSION_KEY); } catch { /* ignore */ } }
+  clearSession() { try { localStorage.removeItem(SESSION_KEY); } catch { /* ignore */ } }
   restoreSession() {
     try {
-      const raw = sessionStorage.getItem(SESSION_KEY);
+      const raw = localStorage.getItem(SESSION_KEY);
       if (!raw) return;
       const d = JSON.parse(raw);
       if (!d.room || !d.me) return;
