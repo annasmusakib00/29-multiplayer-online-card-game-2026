@@ -1003,14 +1003,15 @@ app.use(compression());
 app.use(helmet());
 
 app.get('/', function (req, res) {
-	res.sendFile(__dirname + '/public/index.html');
+	res.sendFile(__dirname + '/client/dist/index.html');
 });
 
 app.get('/serverPingCheck', function (req, res) {
 	res.send((new Date()).toISOString());
 });
 
-app.use(express.static(__dirname + '/public', { maxAge: 3600000 }));//, { maxAge: 1800000 }
+app.use(express.static(__dirname + '/client/dist', { maxAge: 3600000 }));
+app.use(express.static(__dirname + '/public', { maxAge: 3600000 })); // legacy fallback for audio files or static assets
 
 http.listen(port, function () {
 	console.log(colors.bgBlue.green('Listening on port ' + port));
