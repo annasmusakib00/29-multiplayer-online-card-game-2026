@@ -109,7 +109,7 @@ const VideoPlayer = ({ stream, muted }) => {
   );
 };
 
-const PlayerArea = ({ position, name, cards, isTurn, points, rounds, team, voiceActive, isMuted, onMuteToggle, videoStream, isLocal }) => {
+const PlayerArea = ({ position, name, cards, isTurn, points, rounds, team, voiceActive, isMuted, onMuteToggle, videoStream, isLocal, onAvatarClick }) => {
   const isTop = position === 'top';
   const isBottom = position === 'bottom';
   const isLeft = position === 'left';
@@ -118,9 +118,10 @@ const PlayerArea = ({ position, name, cards, isTurn, points, rounds, team, voice
   const flexDirection = isLeft ? 'row' : (isRight ? 'row-reverse' : 'column');
   
   const infoEl = (
-    <div className="player-info" style={{ 
+    <div className="player-info" onClick={onAvatarClick} style={{ 
       boxShadow: isTurn ? `0 0 15px ${team === 'purple' ? 'var(--primary)' : 'var(--accent)'}` : 'none',
-      border: isTurn ? `1px solid ${team === 'purple' ? 'var(--primary)' : 'var(--accent)'}` : '1px solid rgba(255,255,255,0.1)'
+      border: isTurn ? `1px solid ${team === 'purple' ? 'var(--primary)' : 'var(--accent)'}` : '1px solid rgba(255,255,255,0.1)',
+      cursor: 'pointer'
     }}>
       {videoStream ? (
         <VideoPlayer stream={videoStream} muted={isLocal} />
@@ -176,6 +177,7 @@ export default function App() {
   const [team, setTeam] = useState('purple');
   const [lobbyTab, setLobbyTab] = useState('join');
   const [chatInput, setChatInput] = useState('');
+  const [videoPopup, setVideoPopup] = useState(null);
 
   // Position mapping: 0=bottom(me), 1=left, 2=top, 3=right
   const myIndex = client.myNo >= 0 ? client.myNo : 0;
@@ -388,11 +390,11 @@ export default function App() {
 
       {/* Top Bar */}
       <div className="top-bar-container">
-        <div className="glass-panel top-bar-info">
-          <span style={{ fontWeight: 'bold' }}>Room: {state.room?.name || 'Classic'}</span>
-          <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>Purple: {state.rounds[1]} R / {state.points[1]} Pts</span>
-          <span style={{ color: 'var(--accent)', fontWeight: 'bold' }}>Green: {state.rounds[0]} R / {state.points[0]} Pts</span>
-          <span style={{ color: 'var(--text-muted)' }}>| Bid: {state.bidWinner ? `${state.bids[0] || state.bids[1] || ''}` : 'In Progress'}</span>
+        <div className="top-bar-info">
+          <span className="badge" style={{ background: 'rgba(255,255,255,0.1)' }}>Room: {state.room?.name || 'Classic'}</span>
+          <span className="badge badge-purple">Purple: {state.rounds[1]} R / {state.points[1]} Pts</span>
+          <span className="badge badge-green">Green: {state.rounds[0]} R / {state.points[0]} Pts</span>
+          <span className="badge badge-blue">Bid: {state.bidWinner ? `${state.bids[0] || state.bids[1] || ''}` : 'In Progress'}</span>
         </div>
         <div className="top-bar-actions">
           <button 
@@ -405,7 +407,11 @@ export default function App() {
           {state.isHost && (
             <button 
               className="glass-panel" 
-              onClick={() => client.hostDeleteCurrentRoom()}
+              onClick={() => {
+                if (window.confirm('Are you sure you want to delete this room? This action cannot be undone.')) {
+                  client.hostDeleteCurrentRoom();
+                }
+              }}
               style={{ padding: '0 20px', display: 'flex', alignItems: 'center', gap: '8px', border: 'none', color: 'white', cursor: 'pointer', background: 'rgba(255,0,0,0.4)' }}
             >
               Delete Room
@@ -444,6 +450,11 @@ export default function App() {
         onMuteToggle={() => client.togglePeerMute(getPlayerPid(getIndexForPos('top')))}
         videoStream={state.voice.peers[getPlayerPid(getIndexForPos('top'))]?.stream}
         isLocal={false}
+        onAvatarClick={() => {
+          const vs = state.voice.peers[getPlayerPid(getIndexForPos('top'))]?.stream;
+          if (vs) setVideoPopup({ stream: vs, name: getPlayerName(getIndexForPos('top')), isLocal: false });
+          else client.setHue(Math.random() * 360, true);
+        }}
       />
       <PlayerArea 
         position="left" 
@@ -458,6 +469,11 @@ export default function App() {
         onMuteToggle={() => client.togglePeerMute(getPlayerPid(getIndexForPos('left')))}
         videoStream={state.voice.peers[getPlayerPid(getIndexForPos('left'))]?.stream}
         isLocal={false}
+        onAvatarClick={() => {
+          const vs = state.voice.peers[getPlayerPid(getIndexForPos('left'))]?.stream;
+          if (vs) setVideoPopup({ stream: vs, name: getPlayerName(getIndexForPos('left')), isLocal: false });
+          else client.setHue(Math.random() * 360, true);
+        }}
       />
       <PlayerArea 
         position="right" 
@@ -472,6 +488,11 @@ export default function App() {
         onMuteToggle={() => client.togglePeerMute(getPlayerPid(getIndexForPos('right')))}
         videoStream={state.voice.peers[getPlayerPid(getIndexForPos('right'))]?.stream}
         isLocal={false}
+        onAvatarClick={() => {
+          const vs = state.voice.peers[getPlayerPid(getIndexForPos('right'))]?.stream;
+          if (vs) setVideoPopup({ stream: vs, name: getPlayerName(getIndexForPos('right')), isLocal: false });
+          else client.setHue(Math.random() * 360, true);
+        }}
       />
       <PlayerArea 
         position="bottom" 
@@ -486,6 +507,10 @@ export default function App() {
         onMuteToggle={() => client.toggleMic()}
         videoStream={state.voice.active ? state.voice.localStream : null}
         isLocal={true}
+        onAvatarClick={() => {
+          const vs = state.voice.active ? state.voice.localStream : null;
+          if (vs) setVideoPopup({ stream: vs, name: getPlayerName(myIndex) + ' (You)', isLocal: true });
+        }}
       />
       
       {/* Score Cards (Bottom Left & Right) */}
@@ -634,6 +659,40 @@ export default function App() {
           </form>
         </motion.div>
       )}
+
+      {/* Video Popup Modal */}
+      <AnimatePresence>
+        {videoPopup && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+              background: 'rgba(0,0,0,0.85)', zIndex: 99999, display: 'flex', flexDirection: 'column',
+              alignItems: 'center', justifyContent: 'center'
+            }}
+          >
+            <motion.div 
+              initial={{ scale: 0.5, y: 50 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.5, y: 50 }}
+              style={{ position: 'relative', background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', padding: '20px', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}
+            >
+              <button 
+                onClick={() => setVideoPopup(null)}
+                style={{ position: 'absolute', top: '-15px', right: '-15px', background: 'red', color: 'white', border: '2px solid white', borderRadius: '50%', width: '40px', height: '40px', fontSize: '20px', cursor: 'pointer', zIndex: 10000, boxShadow: '0 4px 10px rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              >✕</button>
+              <h3 style={{ margin: '0 0 15px 0', textAlign: 'center', color: 'white', fontSize: '1.5rem' }}>{videoPopup.name}</h3>
+              <video 
+                autoPlay playsInline muted={videoPopup.isLocal}
+                ref={(node) => { if (node) node.srcObject = videoPopup.stream; }}
+                style={{ width: '85vw', maxWidth: '500px', maxHeight: '70vh', borderRadius: '15px', objectFit: 'cover', background: '#000', border: '3px solid var(--primary)' }}
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
