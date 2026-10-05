@@ -32,7 +32,6 @@ body {
   background: radial-gradient(circle at center, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
   color: var(--text-main);
   min-height: 100vh;
-  overflow: hidden;
   user-select: none;
 }
 
@@ -217,70 +216,4 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1.5rem;
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-  :root {
-    --card-width: 80px;
-    --card-height: 116px;
-  }
-  .table-surface {
-    width: 90vw;
-    height: 90vw;
-    border-radius: 40px;
-  }
-  .hand-horizontal > * {
-    margin-right: -40px;
-  }
-  .hand-vertical {
-    gap: -60px;
-  }
-  .card-vertical-wrapper {
-    margin-bottom: -40px;
-  }
-  .player-info {
-    transform: scale(0.85);
-  }
-  .player-bottom { bottom: 10px; }
-  .player-top { top: 10px; }
-  .player-left { left: 10px; }
-  .player-right { right: 10px; }
-}
 
-@media (max-width: 480px) {
-  :root {
-    --card-width: 45px;
-    --card-height: 65px;
-  }
-  .table-surface {
-    width: 90vw;
-    height: 90vw;
-    border-radius: 20px;
-  }
-  .hand-horizontal > * {
-    margin-right: -20px;
-  }
-  .hand-vertical {
-    gap: -35px;
-  }
-  .card-vertical-wrapper {
-    margin-bottom: -25px;
-  }
-  .player-info {
-    transform: none; /* Do not scale, actually shrink to fix bounding box */
-    padding: 4px 6px;
-    gap: 4px;
-    font-size: 0.75rem;
-  }
-  .avatar-size {
-    width: 32px;
-    height: 32px;
-    font-size: 1rem;
-  }
-  .player-area {
-    gap: 5px !important;
-  }
-  .player-bottom { bottom: 2px; }
-  .player-top { top: 2px; }
-  .player-left { left: 0px; }
-  .player-right { right: 0px; }
-}
