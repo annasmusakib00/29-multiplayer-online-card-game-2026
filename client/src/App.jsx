@@ -17,14 +17,24 @@ const PlayingCard = ({ rank, suit, isHidden, onClick, style, isPlayable }) => {
       <motion.div 
         className="playing-card"
         style={{ 
-          background: 'linear-gradient(135deg, #1e1e1e 0%, #3a3a3a 100%)',
-          border: '2px solid #555',
+          background: 'radial-gradient(circle at 30% 30%, #3a3a5a, #111122)',
+          border: '1px solid rgba(255,255,255,0.2)',
+          boxShadow: 'inset 0 0 20px rgba(0,0,0,0.8), 2px 4px 8px rgba(0,0,0,0.5)',
           ...style 
         }}
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
       >
-        <div className="card-center" style={{ color: '#fff' }}>29</div>
+        <div style={{
+          position: 'absolute', top: '10px', left: '10px', right: '10px', bottom: '10px',
+          border: '1px dashed rgba(255,255,255,0.3)', borderRadius: '6px',
+          display: 'flex', alignItems: 'center', justifyContent: 'center'
+        }}>
+          <div style={{ 
+            color: 'rgba(255,255,255,0.8)', fontSize: '2.5rem', fontWeight: '900', 
+            textShadow: '0 2px 10px rgba(0,0,0,0.8)', fontFamily: 'Outfit'
+          }}>29</div>
+        </div>
       </motion.div>
     );
   }
