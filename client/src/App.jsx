@@ -494,10 +494,10 @@ export default function App() {
       />
       
       {/* Score Cards (Bottom Left & Right) */}
-      <div className="score-card desktop-only" style={{ position: 'absolute', bottom: '20px', left: '20px', zIndex: 20 }}>
+      <div className="score-card-container score-green">
         <ScoreCard team="green" points={state.rounds[0]} />
       </div>
-      <div className="score-card desktop-only" style={{ position: 'absolute', bottom: '20px', right: '20px', zIndex: 20 }}>
+      <div className="score-card-container score-purple">
         <ScoreCard team="purple" points={state.rounds[1]} />
       </div>
 

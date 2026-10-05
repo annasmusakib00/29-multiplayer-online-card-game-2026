@@ -283,6 +283,14 @@ h6 {
   display: block;
 }
 
+.score-card-container {
+  position: absolute;
+  bottom: 20px;
+  z-index: 20;
+}
+.score-green { left: 20px; }
+.score-purple { right: 20px; }
+
 /* Responsive Mobile Styles */
 .top-bar-container {
   padding: 20px;
@@ -445,13 +453,22 @@ h6 {
   }
 
   .player-bottom .hand-horizontal {
-    position: fixed;
-    bottom: 20px;
+    position: absolute;
+    top: 100%;
     left: 50%;
-    transform: translateX(-50%) scale(0.8) !important;
-    transform-origin: bottom center !important;
+    transform: translateX(-50%) scale(0.75) !important;
+    transform-origin: top center !important;
     z-index: 200;
   }
+
+  /* Score Cards Mobile */
+  .score-card-container {
+    top: 80px;
+    bottom: auto;
+    transform: scale(0.6);
+  }
+  .score-green { left: -10px; }
+  .score-purple { right: -10px; }
 
   /* Horizontal hand spacing for bottom player */
   .hand-horizontal > * {
