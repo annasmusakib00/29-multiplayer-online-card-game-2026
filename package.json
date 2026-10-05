@@ -1,0 +1,14 @@
+{
+  "name": "29-game",
+  "version": "0.0.1",
+  "description": "29 - The Card Game",
+  "main": "server.js",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "helmet": "^3.23.1",
+    "mongodb": "^3.5.7",
+    "socket.io": "^4.8.4"
+  }
+}
