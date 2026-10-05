@@ -284,6 +284,29 @@ h6 {
 }
 
 /* Responsive Mobile Styles */
+.top-bar-container {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 100;
+  gap: 10px;
+}
+
+.top-bar-info {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.top-bar-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 @media (max-width: 768px) {
   .desktop-only {
     display: none !important;
