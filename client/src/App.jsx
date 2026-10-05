@@ -423,6 +423,20 @@ export default function App() {
 
       <div className="table-surface"></div>
 
+      {/* Your Turn Indicator (Root Level Centered) */}
+      {state.turn?.player === client.meId && !state.bid.open && !state.gameOver && (
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 100, pointerEvents: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <motion.div
+            className="your-turn-indicator"
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: [1, 1.1, 1], opacity: [0.8, 1, 0.8] }}
+            transition={{ repeat: Infinity, duration: 1.5 }}
+          >
+            Your Turn
+          </motion.div>
+        </div>
+      )}
+
       {/* Players */}
       <PlayerArea 
         position="top" 
@@ -537,33 +551,6 @@ export default function App() {
           <div className="table-card-left">{renderTableCard('left')}</div>
           <div className="table-card-right">{renderTableCard('right')}</div>
           <div className="table-card-bottom">{renderTableCard('bottom')}</div>
-
-          {/* Your Turn Indicator */}
-          {state.turn?.player === client.meId && !state.bid.open && !state.gameOver && (
-            <motion.div
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                color: '#ef4444',
-                fontSize: '2.5rem',
-                fontWeight: '900',
-                textShadow: '0 0 15px rgba(239,68,68,0.8), 0 0 5px black, 0 4px 4px rgba(0,0,0,0.5)',
-                zIndex: 100,
-                pointerEvents: 'none',
-                fontFamily: 'Outfit',
-                textTransform: 'uppercase',
-                letterSpacing: '2px',
-                whiteSpace: 'nowrap'
-              }}
-            >
-              Your Turn
-            </motion.div>
-          )}
 
           {state.bid.open && (
             <motion.div className="glass-panel bid-panel">

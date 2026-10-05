@@ -353,6 +353,17 @@ h6 {
   transform: scale(0.75) !important;
 }
 
+.your-turn-indicator {
+  color: #ef4444;
+  font-size: 2rem;
+  font-weight: 900;
+  text-shadow: 0 0 15px rgba(239, 68, 68, 0.8), 0 0 5px black, 0 4px 4px rgba(0, 0, 0, 0.5);
+  font-family: 'Outfit', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
 .desktop-only {
   display: block;
 }
@@ -624,5 +635,9 @@ h6 {
     transform: scale(0.65);
     padding: 15px;
     gap: 10px;
+  }
+
+  .your-turn-indicator {
+    font-size: 1.2rem;
   }
 }
