@@ -752,6 +752,10 @@ class GameClient {
   }
 
   leaveTable() {
+    const s = this.state;
+    if (s.room && s.me) {
+      this.emit('leave_team', { id: s.room.id, passw: s.room.pass, playername: s.me.name, team: s.me.team });
+    }
     this.clearSession();
     this.resetToLobby();
     this.commit();

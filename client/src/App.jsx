@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mic, MicOff, Settings, Users, Volume2, VolumeX, MessageSquare, Heart } from 'lucide-react';
+import { Mic, MicOff, Settings, Users, Volume2, VolumeX, MessageSquare, Heart, LogOut } from 'lucide-react';
 import { useGame } from './game/useGame';
 import './index.css';
 
@@ -699,6 +699,34 @@ export default function App() {
             <button type="submit" className="btn-primary" style={{ padding: '8px 15px' }}>Send</button>
           </form>
         </motion.div>
+      )}
+
+      {/* Leave Game Button for Non-Hosts */}
+      {!state.isHost && state.phase !== 'lobby' && (
+        <button 
+          className="btn-primary"
+          onClick={() => {
+            if (window.confirm('Are you sure you want to leave the game?')) {
+              client.leaveTable();
+            }
+          }}
+          style={{
+            position: 'absolute',
+            bottom: '20px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 50,
+            background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+            padding: '8px 20px',
+            borderRadius: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            boxShadow: '0 4px 15px rgba(239, 68, 68, 0.4)'
+          }}
+        >
+          <LogOut size={16} /> Leave Game
+        </button>
       )}
 
       {/* Video Popup Modal */}

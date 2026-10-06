@@ -183,6 +183,23 @@ class rooms {
 		}
 	}
 
+	removePlayer(ID, pass, name, team) {
+		var login = this.checkLogin(ID, pass, true);
+		if (login.success) {
+			if (team == 'purple') {
+				var idx = this.room_teampurple[login.index].indexOf(name);
+				if (idx > -1) this.room_teampurple[login.index].splice(idx, 1);
+			}
+			else if (team == 'green') {
+				var idx = this.room_teamgreen[login.index].indexOf(name);
+				if (idx > -1) this.room_teamgreen[login.index].splice(idx, 1);
+			}
+			console.log(colors.bgBlue.green('Player removed from team in room: ' + name + '->' + team + '->' + ID));
+			return { 'success': true, 'teampurple': this.room_teampurple[login.index], 'teamgreen': this.room_teamgreen[login.index] };
+		}
+		return { 'success': false };
+	}
+
 	getTeams(ID, pass) {
 		var login = this.checkLogin(ID, pass, true);
 		if (login.success) {
@@ -1055,6 +1072,17 @@ io.on('connection', function (socket) {
 				}
 			}
 			io.emit('roomlist', Rooms.getRooms());
+		}
+	});
+
+	socket.on('leave_team', function (msg) {
+		var reply = Rooms.removePlayer(msg.id, msg.passw, msg.playername, msg.team);
+		if (reply.success) {
+			var r = { s: true, tp: reply.teampurple, tg: reply.teamgreen };
+			socket.to(msg.id).emit('prf', r);
+			socket.emit('prf', r);
+			io.emit('roomlist', Rooms.getRooms());
+			socket.leave(msg.id);
 		}
 	});
 
