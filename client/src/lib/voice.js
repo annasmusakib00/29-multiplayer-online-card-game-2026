@@ -116,7 +116,12 @@ export class VoiceMesh {
     const pc = new RTCPeerConnection({ iceServers: ICE });
     const entry = { pc, audio: null, muted: false, state: 'connecting' };
     this.peers[player] = entry;
-    if (this.stream) this.stream.getTracks().forEach((t) => pc.addTrack(t, this.stream));
+    if (this.stream) {
+      this.stream.getTracks().forEach((t) => pc.addTrack(t, this.stream));
+    } else {
+      pc.addTransceiver('audio', { direction: 'recvonly' });
+      pc.addTransceiver('video', { direction: 'recvonly' });
+    }
     pc.onicecandidate = (e) => { if (e.candidate) this.send('ice', player, e.candidate); };
     pc.ontrack = (e) => {
       if (!entry.audio) {
