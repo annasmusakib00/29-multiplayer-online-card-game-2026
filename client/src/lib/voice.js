@@ -45,22 +45,27 @@ export class VoiceMesh {
   }
 
   async startCamera() {
-    this.stream = await navigator.mediaDevices.getUserMedia({ 
-      audio: { 
-        echoCancellation: true, 
-        noiseSuppression: true,
-        autoGainControl: true,
-        googEchoCancellation: true,
-        googAutoGainControl: true,
-        googNoiseSuppression: true,
-        googHighpassFilter: true
-      }, 
-      video: { width: 320, height: 240, frameRate: 15 } 
-    });
-    // Reconnect to all peers to send the new stream
-    Object.keys(this.peers).forEach((p) => this.closePeer(p, true));
-    this.send('join', '*');
-    this.emitChange();
+    try {
+      this.stream = await navigator.mediaDevices.getUserMedia({ 
+        audio: { 
+          echoCancellation: true, 
+          noiseSuppression: true,
+          autoGainControl: true,
+          googEchoCancellation: true,
+          googAutoGainControl: true,
+          googNoiseSuppression: true,
+          googHighpassFilter: true
+        }, 
+        video: { width: 320, height: 240, frameRate: 15 } 
+      });
+      // Reconnect to all peers to send the new stream
+      Object.keys(this.peers).forEach((p) => this.closePeer(p, true));
+      this.send('join', '*');
+      this.emitChange();
+    } catch (err) {
+      console.error('Camera/Mic permission error:', err);
+      alert('Camera/Microphone access denied! Please allow permissions in your browser settings.');
+    }
   }
 
   stopCamera() {
