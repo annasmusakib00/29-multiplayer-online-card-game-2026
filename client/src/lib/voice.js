@@ -3,23 +3,29 @@
 // with a plain WebRTC mesh; signalling is relayed by server.js through the 'rtc' event.
 
 const ICE = [
-  { urls: 'stun:stun.l.google.com:19302' },
-  { urls: 'stun:stun1.l.google.com:19302' },
+  { urls: "stun:stun.l.google.com:19302" },
+  { urls: "stun:stun1.l.google.com:19302" },
+  { urls: "stun:stun.relay.metered.ca:80" },
   {
-    urls: 'turn:openrelay.metered.ca:80',
-    username: 'openrelayproject',
-    credential: 'openrelayproject'
+    urls: "turn:global.relay.metered.ca:80",
+    username: "23c7ee0479afa166fdfe5260",
+    credential: "XKlRr68Lrx+9D0eJ",
   },
   {
-    urls: 'turn:openrelay.metered.ca:443',
-    username: 'openrelayproject',
-    credential: 'openrelayproject'
+    urls: "turn:global.relay.metered.ca:80?transport=tcp",
+    username: "23c7ee0479afa166fdfe5260",
+    credential: "XKlRr68Lrx+9D0eJ",
   },
   {
-    urls: 'turn:openrelay.metered.ca:443?transport=tcp',
-    username: 'openrelayproject',
-    credential: 'openrelayproject'
-  }
+    urls: "turn:global.relay.metered.ca:443",
+    username: "23c7ee0479afa166fdfe5260",
+    credential: "XKlRr68Lrx+9D0eJ",
+  },
+  {
+    urls: "turns:global.relay.metered.ca:443?transport=tcp",
+    username: "23c7ee0479afa166fdfe5260",
+    credential: "XKlRr68Lrx+9D0eJ",
+  },
 ];
 const SEAT_NO = { green0: 0, purple0: 1, green1: 2, purple1: 3 };
 
