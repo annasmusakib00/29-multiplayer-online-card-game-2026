@@ -155,14 +155,16 @@ export default function App() {
   const client = useGame();
   const state = client.state;
   
-  const [room, setRoom] = useState('');
+  const [room, setRoom] = useState(new URLSearchParams(window.location.search).get('roomName') || '');
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState(new URLSearchParams(window.location.search).get('pass') || '');
   const [adminPass, setAdminPass] = useState('');
   const [team, setTeam] = useState('purple');
-  const [lobbyTab, setLobbyTab] = useState('join');
+  const [lobbyTab, setLobbyTab] = useState((new URLSearchParams(window.location.search).get('roomName') && new URLSearchParams(window.location.search).get('pass')) ? 'join' : 'join');
   const [chatInput, setChatInput] = useState('');
   const [videoPopup, setVideoPopup] = useState(null);
+
+  const isInvite = !!(new URLSearchParams(window.location.search).get('roomName') && new URLSearchParams(window.location.search).get('pass'));
 
   // Position mapping: 0=bottom(me), 1=left, 2=top, 3=right
   const myIndex = client.myNo >= 0 ? client.myNo : 0;
@@ -216,7 +218,7 @@ export default function App() {
           {state.ui.joinError && <p style={{ color: 'red', textAlign: 'center' }}>{state.ui.joinError}</p>}
           {state.ui.loginError && <p style={{ color: 'red', textAlign: 'center' }}>{state.ui.loginError.msg}</p>}
 
-          {state.roomsLoaded && state.rooms.length > 0 && lobbyTab === 'join' && (
+          {state.roomsLoaded && state.rooms.length > 0 && lobbyTab === 'join' && !isInvite && (
             <div style={{ marginBottom: '15px', background: 'rgba(0,0,0,0.4)', padding: '15px', borderRadius: '12px' }}>
               <h3 style={{ marginTop: 0, marginBottom: '10px', fontSize: '1rem', color: 'var(--primary)' }}>Available Rooms</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '150px', overflowY: 'auto' }}>
@@ -239,18 +241,24 @@ export default function App() {
             </div>
           )}
 
-          <div style={{ display: 'flex', gap: '10px', marginBottom: '10px', width: '100%' }}>
-            <button 
-              className="btn-primary" 
-              style={{ flex: 1, background: lobbyTab === 'join' ? 'var(--primary)' : 'rgba(255,255,255,0.1)' }}
-              onClick={() => setLobbyTab('join')}
-            >Join Room</button>
-            <button 
-              className="btn-primary" 
-              style={{ flex: 1, background: lobbyTab === 'create' ? 'var(--accent)' : 'rgba(255,255,255,0.1)' }}
-              onClick={() => setLobbyTab('create')}
-            >Create Room</button>
-          </div>
+          {isInvite && lobbyTab === 'join' ? (
+             <div style={{ textAlign: 'center', marginBottom: '10px', padding: '15px', background: 'rgba(255,255,255,0.1)', borderRadius: '12px', border: '1px solid var(--primary)' }}>
+               <span style={{ color: 'white', fontSize: '1rem' }}>You're invited to join:<br/><strong style={{ color: 'var(--primary)', fontSize: '1.4rem' }}>{room}</strong></span>
+             </div>
+          ) : (
+            <div style={{ display: 'flex', gap: '10px', marginBottom: '10px', width: '100%' }}>
+              <button 
+                className="btn-primary" 
+                style={{ flex: 1, background: lobbyTab === 'join' ? 'var(--primary)' : 'rgba(255,255,255,0.1)' }}
+                onClick={() => setLobbyTab('join')}
+              >Join Room</button>
+              <button 
+                className="btn-primary" 
+                style={{ flex: 1, background: lobbyTab === 'create' ? 'var(--accent)' : 'rgba(255,255,255,0.1)' }}
+                onClick={() => setLobbyTab('create')}
+              >Create Room</button>
+            </div>
+          )}
           
           <input 
             type="text" 
@@ -262,26 +270,31 @@ export default function App() {
               background: 'rgba(0,0,0,0.2)', color: 'white', fontFamily: 'Inter', outline: 'none'
             }}
           />
-          <input 
-            type="text" 
-            placeholder="Room Name" 
-            value={room}
-            onChange={e => setRoom(e.target.value)}
-            style={{ 
-              padding: '12px 16px', borderRadius: '12px', border: '1px solid var(--glass-border)',
-              background: 'rgba(0,0,0,0.2)', color: 'white', fontFamily: 'Inter', outline: 'none'
-            }}
-          />
-          <input 
-            type="password" 
-            placeholder={lobbyTab === 'create' ? "Set Room Password" : "Enter Room Password"}
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            style={{ 
-              padding: '12px 16px', borderRadius: '12px', border: '1px solid var(--glass-border)',
-              background: 'rgba(0,0,0,0.2)', color: 'white', fontFamily: 'Inter', outline: 'none'
-            }}
-          />
+          
+          {!(isInvite && lobbyTab === 'join') && (
+            <>
+              <input 
+                type="text" 
+                placeholder="Room Name" 
+                value={room}
+                onChange={e => setRoom(e.target.value)}
+                style={{ 
+                  padding: '12px 16px', borderRadius: '12px', border: '1px solid var(--glass-border)',
+                  background: 'rgba(0,0,0,0.2)', color: 'white', fontFamily: 'Inter', outline: 'none'
+                }}
+              />
+              <input 
+                type="password" 
+                placeholder={lobbyTab === 'create' ? "Set Room Password" : "Enter Room Password"}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                style={{ 
+                  padding: '12px 16px', borderRadius: '12px', border: '1px solid var(--glass-border)',
+                  background: 'rgba(0,0,0,0.2)', color: 'white', fontFamily: 'Inter', outline: 'none'
+                }}
+              />
+            </>
+          )}
           
           {lobbyTab === 'create' && (
             <input 
@@ -296,25 +309,37 @@ export default function App() {
             />
           )}
 
-          <select 
-            value={team} 
-            onChange={e => setTeam(e.target.value)}
-            style={{ 
-              padding: '12px 16px', borderRadius: '12px', border: '1px solid var(--glass-border)',
-              background: 'rgba(0,0,0,0.8)', color: 'white', fontFamily: 'Inter', outline: 'none'
-            }}
-          >
-            <option value="purple">Purple Team</option>
-            <option value="green">Green Team</option>
-          </select>
+          {!(isInvite && lobbyTab === 'join') && (
+            <select 
+              value={team} 
+              onChange={e => setTeam(e.target.value)}
+              style={{ 
+                padding: '12px 16px', borderRadius: '12px', border: '1px solid var(--glass-border)',
+                background: 'rgba(0,0,0,0.8)', color: 'white', fontFamily: 'Inter', outline: 'none'
+              }}
+            >
+              <option value="purple">Purple Team</option>
+              <option value="green">Green Team</option>
+            </select>
+          )}
           
           <button className="btn-primary" onClick={() => {
+            const finalUsername = username.trim() || 'Player' + Math.floor(Math.random()*1000);
             if (lobbyTab === 'create') {
               client.createRoom({ name: room, pass: password, mode: 0, admin: adminPass });
-              setTimeout(() => client.joinTeam(username, team), 1000);
+              setTimeout(() => client.joinTeam(finalUsername, team), 1000);
             } else {
               client.loginRoom(room + '123', password);
-              setTimeout(() => client.joinTeam(username, team), 1000);
+              setTimeout(() => {
+                let targetTeam = team;
+                if (client.state.teamInfo) {
+                  const tp = client.state.teamInfo.tp?.length || 0;
+                  const tg = client.state.teamInfo.tg?.length || 0;
+                  if (targetTeam === 'purple' && tp >= 2 && tg < 2) targetTeam = 'green';
+                  else if (targetTeam === 'green' && tg >= 2 && tp < 2) targetTeam = 'purple';
+                }
+                client.joinTeam(finalUsername, targetTeam);
+              }, 1000);
             }
           }}>
             {lobbyTab === 'create' ? 'Create & Join' : 'Join Game'}
@@ -380,6 +405,21 @@ export default function App() {
             <span className="badge desktop-only" style={{ background: 'rgba(255,255,255,0.1)' }}>Room: {state.room?.name || 'Classic'}</span>
             <span className="badge badge-purple">Purple: {state.rounds[1]} R / {state.points[1]} Pts</span>
             <span className="badge badge-green">Green: {state.rounds[0]} R / {state.points[0]} Pts</span>
+            {state.isHost && (
+              <button 
+                onClick={() => {
+                  const link = `${window.location.origin}${window.location.pathname}?roomName=${encodeURIComponent(state.room?.name || '')}&pass=${encodeURIComponent(state.room?.pass || '')}`;
+                  navigator.clipboard.writeText(link).then(() => {
+                    client.toast('Invite link copied to clipboard!', 'success');
+                  }).catch(() => {
+                    client.toast('Could not copy link to clipboard.', 'error');
+                  });
+                }}
+                style={{ padding: '6px 10px', display: 'inline-flex', alignItems: 'center', border: '1px solid rgba(255,255,255,0.2)', color: 'white', cursor: 'pointer', background: 'var(--primary)', fontSize: '0.8rem', borderRadius: '12px', fontWeight: 'bold', boxShadow: '0 2px 5px rgba(0,0,0,0.3)', verticalAlign: 'middle', outline: 'none' }}
+              >
+                Copy Refer Link
+              </button>
+            )}
           </div>
           <span className="badge badge-blue">Bid: {state.bidWinner ? `${state.bids[0] || state.bids[1] || ''}` : 'In Progress'}</span>
         </div>
